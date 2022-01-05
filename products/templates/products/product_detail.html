@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{%block content%}
+<section class="section-prod-detail mt-4">
+    <div class="container">
+        <h1>상품 상세</h1>
+        <ul>
+            <li>
+                번호 : {{product_detail.id}}
+            </li>
+            <li>
+                이름 : {{product_detail.name}}
+            </li>
+            <li>
+                가격 : {{product_detail.sale_price}}원
+            </li>
+            <li>
+                등록 : {{product_detail.reg_date }}
+            </li>
+            <li>
+                수정 : {{product_detail.update_date }}
+            </li>
+            <li>
+                마켓 : {{product_detail.market.name}}
+            </li>
+        </ul>
+        <h1>옵션</h1>
+        <ul>
+            {% for product_real in product_reals %}
+            <li>
+                {{product_real.option_1_type}} : {{product_real.option_1_display_name}}
+                / {{product_real.option_2_type}} : {{product_real.option_2_display_name}}
+            </li>
+            {%endfor%}
+        </ul>
+        <h1>질문 목록!</h1>
+        {% if questions %}
+        {% for question in questions %}
+        <div>
+            <h5>{{ question.body }}</h5>
+
+            글쓴이 : {{ question.user.username}}<br>
+            작성일자 : {{ question.reg_date }}<br>
+            수정일자 : {{question.update_date}}<br>
+            {% if request.user == question.user %}
+            <a href="{% url 'products:question_modify' product_detail.id question.id %}" class="btn btn-light">수정</a>
+            <a href="{% url 'products:question_delete' product_detail.id question.id %}" class="btn btn-light">삭제</a>
+            {% endif %}
+        </div>
+        {% endfor %}
+        {%else%}
+        <h4 style="color:magenta;">질문이 없습니다.</h4>
+        {% endif %}
+        <a href="{% url 'products:question_create' product_detail.id %}" class="btn btn-info">질문작성</a>
+    </div>
+</section>
+{%endblock%}

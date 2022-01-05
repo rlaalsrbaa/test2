@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{%block content%}
+<div class="container" style="background-color:Aquamarine;">
+    {% if user.is_authenticated %}
+    <h1>질문!</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <div>
+            <span>내용</span>
+            <textarea name="body" rows="10"></textarea>
+        </div>
+        <div>
+            <span>질문</span>
+            <input type="submit" value="작성">
+        </div>
+    </form>
+</div>
+{% endif %}
+
+{%endblock%}

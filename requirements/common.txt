@@ -1,0 +1,5 @@
+Django==4.0
+mysqlclient
+django-bootstrap5
+pillow
+django-dotenv
