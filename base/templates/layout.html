@@ -1,5 +1,7 @@
 <!doctype html>
 {% load static %}
+{% load humanize %}
+
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -14,25 +16,51 @@
     <link rel="stylesheet" href="{% static 'common.css' %}">
     <script defer src="{% static 'common.js' %}"></script>
 </head>
-<body>
-<a href="{% url 'products:list'%}" class="btn btn-light">메인화면</a>
-<a href="{% url 'accounts:signup'%}" class="btn btn-light">회원가입</a>
-<div class="t-bg-red-500">test</div>
-{% if user.is_authenticated %}
-<a href="{% url 'accounts:logout' %}" class="btn btn-light">{{ user.username }} (로그아웃)</a>
-{% else %}
-<a href="{% url 'accounts:signin'%}" class="btn btn-light">로그인</a>
-{% endif %}
+<body class="t-flex t-flex-col t-min-h-screen t-pt-[56px]">
 {% if messages %}
 {% for message in messages %}
-<div class="alert alert-{{ message.tags }}">
+<div class="alert alert-{{ message.tags }} t-my-[0px]">
     {{ message }}
 </div>
 {% endfor %}
 {% endif %}
+<header>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">메가마켓</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/">홈</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/products">상품리스트</a>
+                    </li>
+                </ul>
+                <form class="d-flex" method="get">
+                    <input class="form-control me-2" type="text" name='kw' value="{{ kw|default_if_none:'' }}"
+                           placeholder="상품명을 입력해주세요." aria-label="Search">
+                    <button class="btn btn-outline-success t-whitespace-nowrap" type="submit">검색</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+</header>
 
-{% block content %}
-{% endblock %}
+<section class="t-flex-1 t-py-[20px]">
+    {%block content%}
+    {%endblock%}
+</section>
+<footer class="footer py-3 bg-light">
+    <div class="container t-text-center">
+        <span class="text-muted">메가마켓</span>
+    </div>
+</footer>
 
 </body>
 </html>

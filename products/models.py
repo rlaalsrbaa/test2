@@ -21,6 +21,8 @@ class Product(models.Model):
     review_count = models.PositiveIntegerField('리뷰수', default=0)
     review_point = models.PositiveIntegerField('리뷰평점', default=0)
 
+    def thumb_img_url(self):
+        return f"https://picsum.photos/id/{self.id}/300/300"
 
 class ProductReal(models.Model):
     reg_date = models.DateTimeField('등록날짜', auto_now_add=True)

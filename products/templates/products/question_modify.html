@@ -51,34 +51,16 @@
 
         <div class="card t-mt-[30px]">
             <div class="card-header">
-                질문등록
+                질문수정
             </div>
             <div class="card-body">
-                <form method="POST" action="{% url 'products:question_create' products.id %}">
+                <form method="POST" action="{% url 'products:question_modify' products.id questions.id %}">
                     {% csrf_token %}
                     {% bootstrap_form question_form %}
                     {% bootstrap_button button_type="submit" content="질문작성" %}
                     {% bootstrap_button button_type="reset" content="취소" %}
                 </form>
             </div>
-        </div>
-
-        <div class="card t-mt-[30px]">
-            <div class="card-header">
-                질문리스트
-            </div>
-            <ul class="list-group list-group-flush">
-                {% for question in questions %}
-                <li class="list-group-item">
-                    <span class="badge bg-secondary">{{question.id}}</span>
-                    {{question.body}}
-                    <a href="{% url 'products:question_delete' products.id question.id %}" class="btn btn-sm btn-warning"
-                       onclick="if ( confirm('정말 삭제하시겠습니까?') == false ) return false;">삭제</a>
-                    <a href="{% url 'products:question_modify' products.id question.id %}"
-                       class="btn btn-sm btn-secondary">수정</a>
-                </li>
-                {% endfor %}
-            </ul>
         </div>
     </div>
 </section>

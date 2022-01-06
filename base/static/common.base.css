@@ -7,6 +7,12 @@
     font-weight: normal;
     font-style: normal;
 }
+html > body ul,
+html > body li {
+    margin:0;
+    padding:0;
+    list-style:none;
+}
 
 html > body {
     font-family: "GmarketSansMedium";
