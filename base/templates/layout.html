@@ -39,8 +39,21 @@
                         <a class="nav-link" aria-current="page" href="/">홈</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/products">상품리스트</a>
+                        <a class="nav-link" href="{% url 'products:list'%}">상품리스트</a>
                     </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'accounts:signout'%}">{{user.username}}(로그아웃)</a>
+                    </li>
+                    {%else%}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'accounts:signin'%}">로그인</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'accounts:signup'%}">회원가입</a>
+                    </li>
+                    {%endif%}
+
                 </ul>
                 <form class="d-flex" method="get">
                     <input class="form-control me-2" type="text" name='kw' value="{{ kw|default_if_none:'' }}"
@@ -52,7 +65,7 @@
     </nav>
 </header>
 
-<section class="t-flex-1 t-py-[20px]">
+<section class="t-flex-1 t-py-[20px] t-flex t-flex-col">
     {%block content%}
     {%endblock%}
 </section>

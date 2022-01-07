@@ -3,13 +3,21 @@ import os
 import requests
 
 from django.contrib import messages
+from django.contrib.auth.views import logout_then_login, LoginView
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login as auth_login, authenticate, login
 from accounts.forms import SignupForm
 
+def signout(request: HttpRequest):
+    messages.success(request, "로그아웃 되었습니다.")
+    return logout_then_login(request,'accounts:signin')
 
-def signup(request):
+
+signin = LoginView.as_view(template_name='accounts/signin.html')
+
+
+def signup(request: HttpRequest):
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
@@ -69,6 +77,7 @@ def kakao_callback(request):
     user = authenticate(request, username="kakao__" + str(id), password="")
     if user is not None:
         login(request, user=user)
-        return redirect('products:list')
+        messages.success(request, "로그인 되었습니다.")
+        return redirect('/')
 
     return HttpResponse(user)

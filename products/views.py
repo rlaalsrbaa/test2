@@ -33,6 +33,7 @@ def _products_detail(request: HttpRequest, product_id):
     product_reals = product_detail.product_reals.all()
     questions = Question.objects.filter(object_id=product_id)
     product = Product.objects.get(id=product_id)
+
     if request.method == 'POST':
         form = QuestionForm(request.POST)
         if form.is_valid():
@@ -59,7 +60,9 @@ def products_detail(request: HttpRequest, product_id):
 
 @login_required(login_url='accounts:signin')
 def question_create(request: HttpRequest, product_id):
+
     return _products_detail(request, product_id)
+
 
 
 def question_delete(request: HttpRequest, product_id, question_id):
@@ -80,8 +83,8 @@ def question_modify(request: HttpRequest, product_id, question_id):
             form.save()
             messages.success(request, "질문이 수정되었습니다.")
             return redirect("products:detail", product_id=product_id)
-        else:
-            form = QuestionForm(None, instance=question)
+    else:
+        form = QuestionForm(None, instance=question)
 
     return render(request, "products/question_modify.html", {
         "products": product,
